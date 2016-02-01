@@ -1,7 +1,11 @@
-FROM alpine:edge
+FROM alpine:3.3
 
-RUN sed -r -e 's/\/main$/\/testing/' -e 's/^/@testing /' /etc/apk/repositories >> /etc/apk/repositories && \
-    apk --update add nzbget@testing p7zip unrar
+RUN apk --update add openssl && \
+    wget -qO /tmp/nzbget.run \
+        $(wget -qO- http://nzbget.net/info/nzbget-version-linux.json | \
+        sed -n "s/^.*stable-download.*: \"\(.*\)\".*/\1/p") && \
+    sh /tmp/nzbget.run && \
+    rm /tmp/nzbget.run
 
 ADD start.sh /start.sh
 
