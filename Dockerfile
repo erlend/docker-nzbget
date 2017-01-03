@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.5
 
 RUN apk --update add openssl && \
     wget -qO /tmp/nzbget.run \
